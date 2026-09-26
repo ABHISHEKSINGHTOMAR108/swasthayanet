@@ -14,6 +14,8 @@ import { Route as AppRouteImport } from './routes/_app'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AppDashboardRouteImport } from './routes/_app.dashboard'
 import { Route as AppEntryRouteImport } from './routes/_app.entry'
+import { Route as AppRedistributionRouteImport } from './routes/_app.redistribution'
+import { Route as AppPhcPhcIdRouteImport } from './routes/_app.phc.$phcId'
 import { Route as ApiPublicForecastRouteImport } from './routes/api/public/forecast'
 
 const IndexRoute = IndexRouteImport.update({
@@ -40,6 +42,16 @@ const AppEntryRoute = AppEntryRouteImport.update({
   path: '/entry',
   getParentRoute: () => AppRoute,
 } as any)
+const AppRedistributionRoute = AppRedistributionRouteImport.update({
+  id: '/redistribution',
+  path: '/redistribution',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppPhcPhcIdRoute = AppPhcPhcIdRouteImport.update({
+  id: '/phc/$phcId',
+  path: '/phc/$phcId',
+  getParentRoute: () => AppRoute,
+} as any)
 const ApiPublicForecastRoute = ApiPublicForecastRouteImport.update({
   id: '/api/public/forecast',
   path: '/api/public/forecast',
@@ -51,6 +63,8 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/dashboard': typeof AppDashboardRoute
   '/entry': typeof AppEntryRoute
+  '/redistribution': typeof AppRedistributionRoute
+  '/phc/$phcId': typeof AppPhcPhcIdRoute
   '/api/public/forecast': typeof ApiPublicForecastRoute
 }
 export interface FileRoutesByTo {
@@ -58,6 +72,8 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/dashboard': typeof AppDashboardRoute
   '/entry': typeof AppEntryRoute
+  '/redistribution': typeof AppRedistributionRoute
+  '/phc/$phcId': typeof AppPhcPhcIdRoute
   '/api/public/forecast': typeof ApiPublicForecastRoute
 }
 export interface FileRoutesById {
@@ -67,13 +83,29 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/_app/dashboard': typeof AppDashboardRoute
   '/_app/entry': typeof AppEntryRoute
+  '/_app/redistribution': typeof AppRedistributionRoute
+  '/_app/phc/$phcId': typeof AppPhcPhcIdRoute
   '/api/public/forecast': typeof ApiPublicForecastRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/dashboard' | '/entry' | '/api/public/forecast'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/dashboard'
+    | '/entry'
+    | '/redistribution'
+    | '/phc/$phcId'
+    | '/api/public/forecast'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/dashboard' | '/entry' | '/api/public/forecast'
+  to:
+    | '/'
+    | '/auth'
+    | '/dashboard'
+    | '/entry'
+    | '/redistribution'
+    | '/phc/$phcId'
+    | '/api/public/forecast'
   id:
     | '__root__'
     | '/'
@@ -81,6 +113,8 @@ export interface FileRouteTypes {
     | '/auth'
     | '/_app/dashboard'
     | '/_app/entry'
+    | '/_app/redistribution'
+    | '/_app/phc/$phcId'
     | '/api/public/forecast'
   fileRoutesById: FileRoutesById
 }
@@ -128,6 +162,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppEntryRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/redistribution': {
+      id: '/_app/redistribution'
+      path: '/redistribution'
+      fullPath: '/redistribution'
+      preLoaderRoute: typeof AppRedistributionRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/phc/$phcId': {
+      id: '/_app/phc/$phcId'
+      path: '/phc/$phcId'
+      fullPath: '/phc/$phcId'
+      preLoaderRoute: typeof AppPhcPhcIdRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/api/public/forecast': {
       id: '/api/public/forecast'
       path: '/api/public/forecast'
@@ -141,11 +189,15 @@ declare module '@tanstack/react-router' {
 interface AppRouteChildren {
   AppDashboardRoute: typeof AppDashboardRoute
   AppEntryRoute: typeof AppEntryRoute
+  AppRedistributionRoute: typeof AppRedistributionRoute
+  AppPhcPhcIdRoute: typeof AppPhcPhcIdRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
   AppDashboardRoute: AppDashboardRoute,
   AppEntryRoute: AppEntryRoute,
+  AppRedistributionRoute: AppRedistributionRoute,
+  AppPhcPhcIdRoute: AppPhcPhcIdRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
