@@ -12,8 +12,10 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AppAuditRouteImport } from './routes/_app.audit'
 import { Route as AppDashboardRouteImport } from './routes/_app.dashboard'
 import { Route as AppEntryRouteImport } from './routes/_app.entry'
+import { Route as AppFederationRouteImport } from './routes/_app.federation'
 import { Route as AppRedistributionRouteImport } from './routes/_app.redistribution'
 import { Route as AppPhcPhcIdRouteImport } from './routes/_app.phc.$phcId'
 import { Route as ApiPublicForecastRouteImport } from './routes/api/public/forecast'
@@ -32,6 +34,11 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppAuditRoute = AppAuditRouteImport.update({
+  id: '/audit',
+  path: '/audit',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppDashboardRoute = AppDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -40,6 +47,11 @@ const AppDashboardRoute = AppDashboardRouteImport.update({
 const AppEntryRoute = AppEntryRouteImport.update({
   id: '/entry',
   path: '/entry',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppFederationRoute = AppFederationRouteImport.update({
+  id: '/federation',
+  path: '/federation',
   getParentRoute: () => AppRoute,
 } as any)
 const AppRedistributionRoute = AppRedistributionRouteImport.update({
@@ -61,8 +73,10 @@ const ApiPublicForecastRoute = ApiPublicForecastRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/audit': typeof AppAuditRoute
   '/dashboard': typeof AppDashboardRoute
   '/entry': typeof AppEntryRoute
+  '/federation': typeof AppFederationRoute
   '/redistribution': typeof AppRedistributionRoute
   '/phc/$phcId': typeof AppPhcPhcIdRoute
   '/api/public/forecast': typeof ApiPublicForecastRoute
@@ -70,8 +84,10 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/audit': typeof AppAuditRoute
   '/dashboard': typeof AppDashboardRoute
   '/entry': typeof AppEntryRoute
+  '/federation': typeof AppFederationRoute
   '/redistribution': typeof AppRedistributionRoute
   '/phc/$phcId': typeof AppPhcPhcIdRoute
   '/api/public/forecast': typeof ApiPublicForecastRoute
@@ -81,8 +97,10 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_app': typeof AppRouteWithChildren
   '/auth': typeof AuthRoute
+  '/_app/audit': typeof AppAuditRoute
   '/_app/dashboard': typeof AppDashboardRoute
   '/_app/entry': typeof AppEntryRoute
+  '/_app/federation': typeof AppFederationRoute
   '/_app/redistribution': typeof AppRedistributionRoute
   '/_app/phc/$phcId': typeof AppPhcPhcIdRoute
   '/api/public/forecast': typeof ApiPublicForecastRoute
@@ -92,8 +110,10 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/audit'
     | '/dashboard'
     | '/entry'
+    | '/federation'
     | '/redistribution'
     | '/phc/$phcId'
     | '/api/public/forecast'
@@ -101,8 +121,10 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/audit'
     | '/dashboard'
     | '/entry'
+    | '/federation'
     | '/redistribution'
     | '/phc/$phcId'
     | '/api/public/forecast'
@@ -111,8 +133,10 @@ export interface FileRouteTypes {
     | '/'
     | '/_app'
     | '/auth'
+    | '/_app/audit'
     | '/_app/dashboard'
     | '/_app/entry'
+    | '/_app/federation'
     | '/_app/redistribution'
     | '/_app/phc/$phcId'
     | '/api/public/forecast'
@@ -148,6 +172,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_app/audit': {
+      id: '/_app/audit'
+      path: '/audit'
+      fullPath: '/audit'
+      preLoaderRoute: typeof AppAuditRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/dashboard': {
       id: '/_app/dashboard'
       path: '/dashboard'
@@ -160,6 +191,13 @@ declare module '@tanstack/react-router' {
       path: '/entry'
       fullPath: '/entry'
       preLoaderRoute: typeof AppEntryRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/federation': {
+      id: '/_app/federation'
+      path: '/federation'
+      fullPath: '/federation'
+      preLoaderRoute: typeof AppFederationRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/redistribution': {
@@ -187,15 +225,19 @@ declare module '@tanstack/react-router' {
 }
 
 interface AppRouteChildren {
+  AppAuditRoute: typeof AppAuditRoute
   AppDashboardRoute: typeof AppDashboardRoute
   AppEntryRoute: typeof AppEntryRoute
+  AppFederationRoute: typeof AppFederationRoute
   AppRedistributionRoute: typeof AppRedistributionRoute
   AppPhcPhcIdRoute: typeof AppPhcPhcIdRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppAuditRoute: AppAuditRoute,
   AppDashboardRoute: AppDashboardRoute,
   AppEntryRoute: AppEntryRoute,
+  AppFederationRoute: AppFederationRoute,
   AppRedistributionRoute: AppRedistributionRoute,
   AppPhcPhcIdRoute: AppPhcPhcIdRoute,
 }
