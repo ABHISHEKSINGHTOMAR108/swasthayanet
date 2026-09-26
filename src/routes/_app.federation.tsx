@@ -64,7 +64,7 @@ function FederationPage() {
 
   const chartData = [
     ...result.partitions.map((p) => ({
-      name: p.label.split(" ")[0]!,
+      name: p.label.replace(/\s*\(.*\)$/, ""),
       mae: Number(p.localMae.toFixed(4)),
       federated: false,
     })),
