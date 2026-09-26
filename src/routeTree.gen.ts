@@ -10,33 +10,143 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppRouteImport } from './routes/_app'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AppAuditRouteImport } from './routes/_app.audit'
+import { Route as AppDashboardRouteImport } from './routes/_app.dashboard'
+import { Route as AppEntryRouteImport } from './routes/_app.entry'
+import { Route as AppFederationRouteImport } from './routes/_app.federation'
+import { Route as AppRedistributionRouteImport } from './routes/_app.redistribution'
+import { Route as AppPhcPhcIdRouteImport } from './routes/_app.phc.$phcId'
+import { Route as ApiPublicForecastRouteImport } from './routes/api/public/forecast'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppRoute = AppRouteImport.update({
+  id: '/_app',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppAuditRoute = AppAuditRouteImport.update({
+  id: '/audit',
+  path: '/audit',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDashboardRoute = AppDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppEntryRoute = AppEntryRouteImport.update({
+  id: '/entry',
+  path: '/entry',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppFederationRoute = AppFederationRouteImport.update({
+  id: '/federation',
+  path: '/federation',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppRedistributionRoute = AppRedistributionRouteImport.update({
+  id: '/redistribution',
+  path: '/redistribution',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppPhcPhcIdRoute = AppPhcPhcIdRouteImport.update({
+  id: '/phc/$phcId',
+  path: '/phc/$phcId',
+  getParentRoute: () => AppRoute,
+} as any)
+const ApiPublicForecastRoute = ApiPublicForecastRouteImport.update({
+  id: '/api/public/forecast',
+  path: '/api/public/forecast',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/audit': typeof AppAuditRoute
+  '/dashboard': typeof AppDashboardRoute
+  '/entry': typeof AppEntryRoute
+  '/federation': typeof AppFederationRoute
+  '/redistribution': typeof AppRedistributionRoute
+  '/phc/$phcId': typeof AppPhcPhcIdRoute
+  '/api/public/forecast': typeof ApiPublicForecastRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/audit': typeof AppAuditRoute
+  '/dashboard': typeof AppDashboardRoute
+  '/entry': typeof AppEntryRoute
+  '/federation': typeof AppFederationRoute
+  '/redistribution': typeof AppRedistributionRoute
+  '/phc/$phcId': typeof AppPhcPhcIdRoute
+  '/api/public/forecast': typeof ApiPublicForecastRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_app': typeof AppRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/_app/audit': typeof AppAuditRoute
+  '/_app/dashboard': typeof AppDashboardRoute
+  '/_app/entry': typeof AppEntryRoute
+  '/_app/federation': typeof AppFederationRoute
+  '/_app/redistribution': typeof AppRedistributionRoute
+  '/_app/phc/$phcId': typeof AppPhcPhcIdRoute
+  '/api/public/forecast': typeof ApiPublicForecastRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/audit'
+    | '/dashboard'
+    | '/entry'
+    | '/federation'
+    | '/redistribution'
+    | '/phc/$phcId'
+    | '/api/public/forecast'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auth'
+    | '/audit'
+    | '/dashboard'
+    | '/entry'
+    | '/federation'
+    | '/redistribution'
+    | '/phc/$phcId'
+    | '/api/public/forecast'
+  id:
+    | '__root__'
+    | '/'
+    | '/_app'
+    | '/auth'
+    | '/_app/audit'
+    | '/_app/dashboard'
+    | '/_app/entry'
+    | '/_app/federation'
+    | '/_app/redistribution'
+    | '/_app/phc/$phcId'
+    | '/api/public/forecast'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppRoute: typeof AppRouteWithChildren
+  AuthRoute: typeof AuthRoute
+  ApiPublicForecastRoute: typeof ApiPublicForecastRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +158,97 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_app': {
+      id: '/_app'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_app/audit': {
+      id: '/_app/audit'
+      path: '/audit'
+      fullPath: '/audit'
+      preLoaderRoute: typeof AppAuditRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/dashboard': {
+      id: '/_app/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AppDashboardRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/entry': {
+      id: '/_app/entry'
+      path: '/entry'
+      fullPath: '/entry'
+      preLoaderRoute: typeof AppEntryRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/federation': {
+      id: '/_app/federation'
+      path: '/federation'
+      fullPath: '/federation'
+      preLoaderRoute: typeof AppFederationRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/redistribution': {
+      id: '/_app/redistribution'
+      path: '/redistribution'
+      fullPath: '/redistribution'
+      preLoaderRoute: typeof AppRedistributionRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/phc/$phcId': {
+      id: '/_app/phc/$phcId'
+      path: '/phc/$phcId'
+      fullPath: '/phc/$phcId'
+      preLoaderRoute: typeof AppPhcPhcIdRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/api/public/forecast': {
+      id: '/api/public/forecast'
+      path: '/api/public/forecast'
+      fullPath: '/api/public/forecast'
+      preLoaderRoute: typeof ApiPublicForecastRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
+interface AppRouteChildren {
+  AppAuditRoute: typeof AppAuditRoute
+  AppDashboardRoute: typeof AppDashboardRoute
+  AppEntryRoute: typeof AppEntryRoute
+  AppFederationRoute: typeof AppFederationRoute
+  AppRedistributionRoute: typeof AppRedistributionRoute
+  AppPhcPhcIdRoute: typeof AppPhcPhcIdRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppAuditRoute: AppAuditRoute,
+  AppDashboardRoute: AppDashboardRoute,
+  AppEntryRoute: AppEntryRoute,
+  AppFederationRoute: AppFederationRoute,
+  AppRedistributionRoute: AppRedistributionRoute,
+  AppPhcPhcIdRoute: AppPhcPhcIdRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppRoute: AppRouteWithChildren,
+  AuthRoute: AuthRoute,
+  ApiPublicForecastRoute: ApiPublicForecastRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
